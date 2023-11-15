@@ -1,0 +1,36 @@
+﻿@model Serene.Models.Category
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<partial name="_Notification"/>
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-dark">Delete Category</h2>
+            <hr />
+        </div>
+        <input asp-for="CategoryId" hidden />
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3 row p-1">
+            <label class="p-0">Category Name</label>
+            <input type="text" asp-for=Name displayed class="form-control" />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0">Display Order</label>
+            <input type="text" asp-for=DisplayOrder displayed class="form-control" />
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Category" asp-action="GetAllData" class="btn btn-secondary border form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
