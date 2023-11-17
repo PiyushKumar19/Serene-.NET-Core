@@ -3,6 +3,7 @@ using Serene.DataAccess.Data;
 using Serene.DataAccess.Repository;
 using Serene.DataAccess.Repository.IRepositories;
 using Serene.InterfacesAndRepos;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultString"));
         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     });
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddTransient<ICategory, CategoryRepo>();
+builder.Services.AddRazorPages();
 // Generic One
-builder.Services.AddScoped<ICategoryRepo, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepo>();
 
 var app = builder.Build();
 
@@ -31,11 +36,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

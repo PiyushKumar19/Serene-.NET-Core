@@ -1,0 +1,3 @@
+[submodule "Serene-NET-Core-DataAccess"]
+	path = Serene-NET-Core-DataAccess
+	url = https://github.com/PiyushKumar19/Serene-NET-Core-DataAccess.git

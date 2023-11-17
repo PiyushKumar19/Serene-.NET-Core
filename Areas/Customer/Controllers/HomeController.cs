@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Serene.Models;
 using System.Diagnostics;
 
-namespace Serene.Controllers
+namespace Serene.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

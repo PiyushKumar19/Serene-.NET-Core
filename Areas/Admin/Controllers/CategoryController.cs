@@ -5,26 +5,27 @@ using Serene.InterfacesAndRepos;
 using Serene.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Serene.Controllers
+namespace Serene.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepo categoryRepo;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CategoryController(ICategoryRepo categoryRepo)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            this.categoryRepo = categoryRepo;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IActionResult> GetAllData()
         {
-            var data = await categoryRepo.GetAll();
+            var data = await unitOfWork.CategoryRepo.GetAll();
             return View(data);
         }
 
         public async Task<IActionResult> GetData(int id)
         {
-            var data = categoryRepo.Get(u=>u.CategoryId == id);
+            var data = unitOfWork.CategoryRepo.Get(u => u.CategoryId == id);
             return View(data);
         }
 
@@ -42,8 +43,8 @@ namespace Serene.Controllers
             }
             if (ModelState.IsValid)
             {
-                categoryRepo.Create(model);
-                categoryRepo.Save();
+                unitOfWork.CategoryRepo.Create(model);
+                unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("GetAllData");
             }
@@ -58,7 +59,7 @@ namespace Serene.Controllers
                 return View();
             }
 
-            var data = categoryRepo.Get(u=>u.CategoryId == id);
+            var data = unitOfWork.CategoryRepo.Get(u => u.CategoryId == id);
             if (data != null)
                 return View(data);
 
@@ -68,11 +69,11 @@ namespace Serene.Controllers
         public async Task<IActionResult> Edit(Category model)
         {
 
-            var data = categoryRepo.Get(u=>u.CategoryId == model.CategoryId);
+            var data = unitOfWork.CategoryRepo.Get(u => u.CategoryId == model.CategoryId);
             if (data != null)
             {
-                categoryRepo.Update(model);
-                categoryRepo.Save();
+                unitOfWork.CategoryRepo.Update(model);
+                unitOfWork.Save();
                 TempData["success"] = "Category Updated successfully";
                 return RedirectToAction(nameof(GetAllData));
             }
@@ -85,9 +86,9 @@ namespace Serene.Controllers
             {
                 return NotFound();
             }
-            var data = categoryRepo.Get(u => u.CategoryId == id);
-            categoryRepo.Remove(data);
-            categoryRepo.Save();
+            var data = unitOfWork.CategoryRepo.Get(u => u.CategoryId == id);
+            unitOfWork.CategoryRepo.Remove(data);
+            unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction(nameof(GetAllData));
         }

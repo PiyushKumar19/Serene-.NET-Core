@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Serene.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\jayan\\source\\repos\\Serene\\Serene\\wwwroot\\css\\Input.css",
+      "PackagePath": "staticwebassets\\css\\Input.css"
+    },
+    {
+      "Id": "C:\\Users\\jayan\\source\\repos\\Serene\\Serene\\wwwroot\\css\\Output.css",
+      "PackagePath": "staticwebassets\\css\\Output.css"
+    },
+    {
       "Id": "C:\\Users\\jayan\\source\\repos\\Serene\\Serene\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
